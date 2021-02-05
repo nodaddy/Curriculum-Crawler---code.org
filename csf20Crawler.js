@@ -6,7 +6,7 @@ const fs = require("fs");
 let wArr = [];
 
 
-async function crawl(uri, unitNumber, lessonNumber){ 
+async function crawl(uri, unitName, lessonNumber){ 
   const response = await request({
       uri: uri,
       headers: {
@@ -26,7 +26,7 @@ async function crawl(uri, unitNumber, lessonNumber){
   
   await wArr.push({
     curriculum:"csf-20",
-      unit: unitNumber,
+      unit: unitName,
       lesson: lessonNumber,
       data : k.trim()
   })
@@ -62,14 +62,14 @@ let $  = cheerio.load(response)
   // fs.writeFileSync("./data.json",  JSON.stringify(p));
    await wArr.push({
     curriculum:"csf-20",
-    unit: i,
+    unit: 'course' + p1i.toUpperCase(),
     lesson: 0,
     data : k1.trim()
   });
 
   for(let j = 1; j<=n;j++ ){
     console.log(i, j);
-    await crawl(`https://curriculum.code.org/csf-20/course${p1i}/${j}/`,i, j);
+    await crawl(`https://curriculum.code.org/csf-20/course${p1i}/${j}/`, `course${p1i.toUpperCase()}`, j);
    }  
 })().then((res)=>{fs.writeFileSync("./csf20.json",  JSON.stringify(wArr));})
 
