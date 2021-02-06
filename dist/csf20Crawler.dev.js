@@ -10,7 +10,7 @@ var fs = require("fs");
 
 var wArr = [];
 
-function crawl(uri, unitName, lessonNumber) {
+function crawl(uri, letter, lessonNumber) {
   var response, $, k;
   return regeneratorRuntime.async(function crawl$(_context) {
     while (1) {
@@ -35,7 +35,7 @@ function crawl(uri, unitName, lessonNumber) {
           _context.next = 8;
           return regeneratorRuntime.awrap(wArr.push({
             curriculum: "csf-20",
-            unit: unitName,
+            unit: "course".concat(letter),
             lesson: lessonNumber,
             data: k.trim()
           }));
@@ -86,7 +86,7 @@ var _loop = function _loop(i) {
             _context2.next = 11;
             return regeneratorRuntime.awrap(wArr.push({
               curriculum: "csf-20",
-              unit: 'course' + p1i.toUpperCase(),
+              unit: "course".concat(p1[i - 1]),
               lesson: 0,
               data: k1.trim()
             }));
@@ -96,20 +96,21 @@ var _loop = function _loop(i) {
 
           case 12:
             if (!(j <= n)) {
-              _context2.next = 19;
+              _context2.next = 20;
               break;
             }
 
-            console.log(i, j);
-            _context2.next = 16;
-            return regeneratorRuntime.awrap(crawl("https://curriculum.code.org/csf-20/course".concat(p1i, "/").concat(j, "/"), "course".concat(p1i.toUpperCase()), j));
+            p1i = p1[i - 1];
+            console.log(i, j, p1i);
+            _context2.next = 17;
+            return regeneratorRuntime.awrap(crawl("https://curriculum.code.org/csf-20/course".concat(p1i, "/").concat(j, "/"), p1i, j));
 
-          case 16:
+          case 17:
             j++;
             _context2.next = 12;
             break;
 
-          case 19:
+          case 20:
           case "end":
             return _context2.stop();
         }
